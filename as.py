@@ -1,21 +1,22 @@
+from tkinter import *
 
-# Import the tkinter module
-import tkinter
-  
-# Creating the GUI window.
-root = tkinter.Tk()
-root.title("Welcome to GeekForGeeks") 
-root.geometry("400x240")
-  
-# Creating our text widget.
-sample_text = tkinter.Text( root, height = 10)
-sample_text.pack()
-  
-# Creating a tuple containing 
-# the specifications of the font.
-Font_tuple = ("Sans Serif", 20, "bold")
-  
-# Parsed the specifications to the
-# Text widget using .configure( ) method.
-sample_text.configure(font = Font_tuple)
+root = Tk()
+frame = Frame(root)
+frame.pack()
+
+bottomframe = Frame(root)
+bottomframe.pack( side = BOTTOM )
+
+redbutton = Button(frame, text="Red", fg="red")
+redbutton.pack( side = LEFT)
+
+greenbutton = Button(frame, text="green", fg="green")
+greenbutton.pack( side = LEFT )
+
+bluebutton = Button(frame, text="Blue", fg="blue")
+bluebutton.pack( side = LEFT )
+
+blackbutton = Button(bottomframe, text="Black", fg="black")
+blackbutton.pack( side = BOTTOM)
+
 root.mainloop()
