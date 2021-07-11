@@ -3,19 +3,37 @@ import mysql.connector
 from tkinter import messagebox
 
 root = Tk()
-root.geometry("500x300")
+root.geometry("650x650")
 root.title("Register Page")
 root.config(bg="#0F0F0F")
 
-Label(root, text="ID Number", bg="#0F0F0F", foreground="#89db33").place(x=30, y=30)
-Label(root, text="Name", bg="#0F0F0F", foreground="#89db33").place(x=30, y=80)
-Label(root, text="Surname", bg="#0F0F0F", foreground="#89db33").place(x=30, y=130)
-Label(root, text="Username", bg="#0F0F0F", foreground="#89db33").place(x=30, y=180)
-Label(root, text="Role", bg="#0F0F0F", foreground="#89db33").place(x=30, y=230)
-Label(root, text="Password", bg="#0F0F0F", foreground="#89db33").place(x=250, y=30)
-Label(root, text="Cell Number", bg="#0F0F0F", foreground="#89db33").place(x=250, y=80)
-Label(root, text="Next of kin", bg="#0F0F0F", foreground="#89db33").place(x=250, y=130)
-Label(root, text="Next of Kin Cell Number", bg="#0F0F0F", foreground="#89db33").place(x=250, y=180)
+lc_icon = PhotoImage(file="images/lc academy.png")
+canvas = Canvas(root, width=150, height=60, highlightthickness="0")
+canvas.create_image(0, 0, anchor=NW, image=lc_icon)
+canvas.place(x=470, y=550)
+
+lc_logo = PhotoImage(file="images/rsz_lc_logo.png")
+canvas = Canvas(root, width=85, height=52, highlightthickness="0")
+canvas.create_image(0, 0, anchor=NW, image=lc_logo)
+canvas.place(x=30, y=20)
+
+reg_logo = PhotoImage(file="images/reg logo.png")
+canvas = Canvas(root, width=100, height=100, highlightthickness="0")
+canvas.create_image(0, 0, anchor=NW, image=reg_logo)
+canvas.place(x=250, y=100)
+
+font_style = ("Sans Serif", 25, "bold", "italic")
+Label(root, text="Create Your Account", bg="#0F0F0F", foreground="#FFFFFF", font=font_style).place(x=120, y=50)
+
+Label(root, text="ID Number", bg="#0F0F0F", foreground="#89db33").place(x=110, y=230)
+Label(root, text="Name", bg="#0F0F0F", foreground="#89db33").place(x=110, y=280)
+Label(root, text="Surname", bg="#0F0F0F", foreground="#89db33").place(x=110, y=330)
+Label(root, text="Username", bg="#0F0F0F", foreground="#89db33").place(x=110, y=380)
+Label(root, text="Role", bg="#0F0F0F", foreground="#89db33").place(x=330, y=230)
+Label(root, text="Password", bg="#0F0F0F", foreground="#89db33").place(x=110, y=430)
+Label(root, text="Cell Number", bg="#0F0F0F", foreground="#89db33").place(x=330, y=280)
+Label(root, text="Next of kin", bg="#0F0F0F", foreground="#89db33").place(x=330, y=330)
+Label(root, text="Next of Kin Cell Number", bg="#0F0F0F", foreground="#89db33").place(x=330, y=380)
 
 idcheck = False
 namecheck = False
@@ -88,63 +106,63 @@ id_ent = Entry(root, width=24)
 id_ent.insert(0, 'eg. 0002035200084')
 id_ent.configure(state=DISABLED)
 id_ent.bind("<Button>", id_text)
-id_ent.place(x=30, y=50)
+id_ent.place(x=110, y=250)
 
 
 name_ent = Entry(root, width=24)
 name_ent.insert(0, 'eg. Achmat')
 name_ent.configure(state=DISABLED)
 name_ent.bind('<Button-1>', name_text)
-name_ent.place(x=30, y=100)
+name_ent.place(x=110, y=300)
 
 
 surname_ent = Entry(root, width=24)
 surname_ent.insert(0, 'eg. Breda')
 surname_ent.configure(state=DISABLED)
 surname_ent.bind('<Button-1>', sname_text)
-surname_ent.place(x=30, y=150)
+surname_ent.place(x=110, y=350)
 
 
 username_ent = Entry(root, width=24)
 username_ent.insert(0, 'eg. Achmat28')
 username_ent.configure(state=DISABLED)
 username_ent.bind('<Button-1>', uname_text)
-username_ent.place(x=30, y=200)
+username_ent.place(x=110, y=400)
 
 
 role_ent = Entry(root, width=24)
 role_ent.insert(0, 'Staff/Lecturer/Student/Visitor')
 role_ent.configure(state=DISABLED)
 role_ent.bind('<Button-1>', role_text)
-role_ent.place(x=30, y=250)
+role_ent.place(x=330, y=250)
 
 
 password_ent = Entry(root, width=24)
 password_ent.insert(0, 'eg. uthmaan or 0000')
 password_ent.configure(state=DISABLED)
 password_ent.bind("<Button>", pass_text)
-password_ent.place(x=250, y=50)
+password_ent.place(x=110, y=450)
 
 
 cell_ent = Entry(root, width=24)
 cell_ent.insert(0, 'eg. 0842567852')
 cell_ent.configure(state=DISABLED)
 cell_ent.bind('<Button-1>', cell_text)
-cell_ent.place(x=250, y=100)
+cell_ent.place(x=330, y=300)
 
 
 next_kin_ent = Entry(root, width=24)
 next_kin_ent.insert(0, 'eg. Parent/Sibling/Spouse')
 next_kin_ent.configure(state=DISABLED)
 next_kin_ent.bind('<Button-1>', kin_text)
-next_kin_ent.place(x=250, y=150)
+next_kin_ent.place(x=330, y=350)
 
 
 kin_cell_ent = Entry(root, width=24)
 kin_cell_ent.insert(0, 'eg. 0725684526')
 kin_cell_ent.configure(state=DISABLED)
 kin_cell_ent.bind('<Button-1>', kcell_text)
-kin_cell_ent.place(x=250, y=200)
+kin_cell_ent.place(x=330, y=400)
 
 
 def register():
@@ -160,8 +178,16 @@ def register():
         my_db.commit()
 
 
-visitor_btn = Button(root, text="Register", command=register, bg="#89db33")
-visitor_btn.place(x=365, y=250)
+reg_btn = Button(root, text="Register", command=register, bg="#89db33", width=21)
+reg_btn.place(x=330, y=441)
 
+
+def login():
+    root.destroy()
+    import main
+
+
+log_btn = Button(root, text="Sign In", command=login, bg="#89db33", width=48)
+log_btn.place(x=112, y=500)
 
 root.mainloop()

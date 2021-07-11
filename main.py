@@ -5,7 +5,7 @@ from datetime import datetime
 
 root = Tk()
 root.geometry("650x650")
-root.title("Login Page")
+root.title("Sign In/Out Page")
 root.config(bg="#0F0F0F")
 
 calender = StringVar()
@@ -95,7 +95,7 @@ def sign_in():
     if name_ent.get() == "" or password_ent.get() == "":
         messagebox.showerror("No Entries", "Please enter Username and Password")
     elif name_ent.get() != i[3] or password_ent.get() != i[5]:
-        messagebox.showerror("Access Denied", "Incorrect Username or Password")
+        messagebox.showerror("Login Unsuccessful", "Incorrect Username or Password")
         name_ent.delete(0, END)
         password_ent.delete(0, END)
 
@@ -125,13 +125,15 @@ out_btn.grid(column=2, row=7, padx=10, pady=10)
 
 def admin_go(event):
     root.withdraw()
-    import admin
+    root.destroy()
+    import admin_log
 
 
 root.bind("<Control-a>", admin_go)
 
 
 def register():
+    root.destroy()
     import register
 
 
