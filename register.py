@@ -100,8 +100,6 @@ def kcell_text(event):
     kcellcheck = True
 
 
-
-
 id_ent = Entry(root, width=24)
 id_ent.insert(0, 'eg. 0002035200084')
 id_ent.configure(state=DISABLED)
