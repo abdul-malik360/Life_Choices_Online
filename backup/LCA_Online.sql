@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.25, for Linux (x86_64)
 --
--- Host: localhost    Database: LC_Online
+-- Host: localhost    Database: LCA_Online
 -- ------------------------------------------------------
 -- Server version	8.0.25-0ubuntu0.20.04.1
 
@@ -47,15 +47,16 @@ DROP TABLE IF EXISTS `Log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Log` (
+  `LogNumber` int unsigned NOT NULL AUTO_INCREMENT,
   `UserName` varchar(15) NOT NULL,
   `Password` varchar(15) NOT NULL,
   `Date` date NOT NULL,
   `TimeIn` time NOT NULL,
   `TimeOut` time NOT NULL,
-  PRIMARY KEY (`Password`),
+  PRIMARY KEY (`LogNumber`),
   KEY `UserName` (`UserName`),
   CONSTRAINT `Log_ibfk_1` FOREIGN KEY (`UserName`) REFERENCES `Register` (`UserName`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +65,6 @@ CREATE TABLE `Log` (
 
 LOCK TABLES `Log` WRITE;
 /*!40000 ALTER TABLE `Log` DISABLE KEYS */;
-INSERT INTO `Log` VALUES ('amm','0000','2021-07-14','01:56:09','01:58:53'),('ub','1234','2021-07-13','23:37:12','01:07:21'),('Mr G','5678','2021-07-14','01:57:02','00:00:00'),('apple','mac','2021-07-14','01:58:04','00:00:00');
 /*!40000 ALTER TABLE `Log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,7 +95,7 @@ CREATE TABLE `Register` (
 
 LOCK TABLES `Register` WRITE;
 /*!40000 ALTER TABLE `Register` DISABLE KEYS */;
-INSERT INTO `Register` VALUES ('0002035200084','Abdul-Malik','Mohamed','amm','Student','0000','0764971338','Erifaan Mohamed','0608816613'),('0741085209630','Steve','Jobs','apple','Visitor','mac','0856398541','Laurene ','0789542150'),('5678910111213','Philiswa','Mqambeli','Miss P','Staff','8765','0815697420','Candice','0723569874'),('1312111098765','Godwin','Dzvapatsra','Mr G','Lecturer','5678','0723541235','Thapelo','0846952352'),('test admin','test admin','test admin','test admin','test admin','test admin','test admin','test admin','test admin'),('test2','test2','test2','test2','test2','test2','test2','test2','test2'),('test3','test3','test3','test3','test3','test3','test3','test3','test3'),('test4','test4','test4','test4','test4','test4','test4','test4','test4'),('10987654321','Thapelo','Tsotetsi','tsotetsi','Lecturer','4321','0823524578','Godwin','0723548569'),('12345678910','Uthmaan','Breda','ub','student','1234','0721234567','Ubaidullah Breda','0821256352');
+INSERT INTO `Register` VALUES ('0002035200084','Abdul-Malik','Mohamed','am21','Student','0000','0764971338','Erifaan Mohamed','0608816613'),('0741085209630','Steve','Jobs','apple','Visitor','mac','0856398541','Laurene','0789542150'),('8475635463546','Jason','Wandrag','J Dawg','Lecturer','java','0756521235','Mr G','0812358749'),('8475635463546','Jaon','Wandrag','J Dawgg','Lecturer','java','0756521235','Mr G','0812358749'),('5678910111213','Philiswa','Mqambeli','Miss P','Staff','8765','0815697420','Candice','0723569874'),('1312111098765','Godwin','Dzvapatsra','Mr G','Lecturer','5678','0723541235','Thapelo','0846952352'),('10987654321','Thapelo','Tsotetsi','tsotetsi','Lecturer','4321','0823524578','Godwin','0723548569'),('12345678910','Uthmaan','Breda','ub','Student','1234','0721234567','Ubaidullah Breda','0821256352');
 /*!40000 ALTER TABLE `Register` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -108,4 +108,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-14  3:08:42
+-- Dump completed on 2021-07-15  0:40:58

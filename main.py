@@ -76,7 +76,7 @@ Checkbutton(root, variable=tick, onvalue=1, offvalue=0, command=show_pass, bg="#
 
 
 def sign_in():
-    my_db = mysql.connector.connect(user="abdul-malik", password="@8-2fermENt2020", host="127.0.0.1", database="LC_Online", auth_plugin="mysql_native_password", buffered=True)
+    my_db = mysql.connector.connect(user="abdul-malik", password="@8-2fermENt2020", host="127.0.0.1", database="LCA_Online", auth_plugin="mysql_native_password", buffered=True)
     my_cursor = my_db.cursor()
     my_cursor.execute("select * from Register")
 

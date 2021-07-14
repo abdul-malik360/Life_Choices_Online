@@ -20,63 +20,68 @@ font_style = ("Sans Serif", 25, "bold", "italic")
 Label(root, text="Admin Account", bg="#0F0F0F", foreground="#FFFFFF", font=font_style).place(x=180, y=50)
 
 table = ttk.Treeview(root)
-my_db = mysql.connector.connect(user="abdul-malik", password="@8-2fermENt2020", host="127.0.0.1", database="LC_Online", auth_plugin="mysql_native_password")
+my_db = mysql.connector.connect(user="abdul-malik", password="@8-2fermENt2020", host="127.0.0.1", database="LCA_Online", auth_plugin="mysql_native_password")
 my_cursor = my_db.cursor()
 
 
 def table_reg():
-    if clicked:
-        remove_btn.config(state=NORMAL)
-        my_cursor.execute("select * from Register")
+    rt_btn.config(state=DISABLED)
+    remove_btn.config(state=NORMAL)
+    my_cursor.execute("select * from Register")
 
-        table["show"] = "headings"
+    table["show"] = "headings"
 
-        style = ttk.Style(root)
-        style.theme_use("clam")
+    style = ttk.Style(root)
+    style.theme_use("clam")
 
-        style.configure(".", font=("sans serif", 11))
-        style.configure("Treeview.Heading", foreground="#89db33", bg="#0F0F0F", font=("sans serif", 11, "bold"))
-        table["columns"] = ("ID", "Name", "Surname", "UserName", "Role", "Password", "Cell", "Next_Of_Kin", "NextOfKin_Cell")
+    style.configure(".", font=("sans serif", 11))
+    style.configure("Treeview.Heading", foreground="#89db33", bg="#0F0F0F", font=("sans serif", 11, "bold"))
+    table["columns"] = ("ID", "Name", "Surname", "UserName", "Role", "Password", "Cell", "Next_Of_Kin", "NextOfKin_Cell")
 
-        table.column("ID", width=150, minwidth=150, anchor=tkinter.CENTER)
-        table.column("Name", width=150, minwidth=150, anchor=tkinter.CENTER)
-        table.column("Surname", width=150, minwidth=150, anchor=tkinter.CENTER)
-        table.column("UserName", width=100, minwidth=100, anchor=tkinter.CENTER)
-        table.column("Role", width=100, minwidth=100, anchor=tkinter.CENTER)
-        table.column("Password", width=150, minwidth=150, anchor=tkinter.CENTER)
-        table.column("Cell", width=120, minwidth=120, anchor=tkinter.CENTER)
-        table.column("Next_Of_Kin", width=150, minwidth=150, anchor=tkinter.CENTER)
-        table.column("NextOfKin_Cell", width=150, minwidth=150, anchor=tkinter.CENTER)
+    table.column("ID", width=150, minwidth=150, anchor=tkinter.CENTER)
+    table.column("Name", width=150, minwidth=150, anchor=tkinter.CENTER)
+    table.column("Surname", width=150, minwidth=150, anchor=tkinter.CENTER)
+    table.column("UserName", width=100, minwidth=100, anchor=tkinter.CENTER)
+    table.column("Role", width=100, minwidth=100, anchor=tkinter.CENTER)
+    table.column("Password", width=150, minwidth=150, anchor=tkinter.CENTER)
+    table.column("Cell", width=120, minwidth=120, anchor=tkinter.CENTER)
+    table.column("Next_Of_Kin", width=150, minwidth=150, anchor=tkinter.CENTER)
+    table.column("NextOfKin_Cell", width=150, minwidth=150, anchor=tkinter.CENTER)
 
-        table.heading("ID", text="ID Number", anchor=tkinter.CENTER)
-        table.heading("Name", text="Name", anchor=tkinter.CENTER)
-        table.heading("Surname", text="Surname", anchor=tkinter.CENTER)
-        table.heading("UserName", text="Username", anchor=tkinter.CENTER)
-        table.heading("Role", text="Role", anchor=tkinter.CENTER)
-        table.heading("Password", text="Password", anchor=tkinter.CENTER)
-        table.heading("Cell", text="Cell Number", anchor=tkinter.CENTER)
-        table.heading("Next_Of_Kin", text="Next of Kin", anchor=tkinter.CENTER)
-        table.heading("NextOfKin_Cell", text="Next of Kin Cell", anchor=tkinter.CENTER)
+    table.heading("ID", text="ID Number", anchor=tkinter.CENTER)
+    table.heading("Name", text="Name", anchor=tkinter.CENTER)
+    table.heading("Surname", text="Surname", anchor=tkinter.CENTER)
+    table.heading("UserName", text="Username", anchor=tkinter.CENTER)
+    table.heading("Role", text="Role", anchor=tkinter.CENTER)
+    table.heading("Password", text="Password", anchor=tkinter.CENTER)
+    table.heading("Cell", text="Cell Number", anchor=tkinter.CENTER)
+    table.heading("Next_Of_Kin", text="Next of Kin", anchor=tkinter.CENTER)
+    table.heading("NextOfKin_Cell", text="Next of Kin Cell", anchor=tkinter.CENTER)
 
-        i = 0
-        for row in my_cursor:
-            table.insert("", i, text="", values=(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]))
-            i = i + 1
+    i = 0
+    for row in my_cursor:
+        table.insert("", i, text="", values=(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]))
+        i = i + 1
 
-        scrollh = ttk.Scrollbar(root, orient="horizontal")
-        scrollh.configure(command=table.xview)
-        table.configure(xscrollcommand=scrollh.set)
-        scrollh.pack(fill=X, side=BOTTOM)
+    scrollh = ttk.Scrollbar(root, orient="horizontal")
+    scrollh.configure(command=table.xview)
+    table.configure(xscrollcommand=scrollh.set)
+    scrollh.pack(fill=X, side=BOTTOM)
 
-        scrollv = ttk.Scrollbar(root, orient="vertical")
-        scrollv.configure(command=table.yview)
-        table.configure(yscrollcommand=scrollv.set)
-        scrollv.pack(fill=Y, side=RIGHT)
+    scrollv = ttk.Scrollbar(root, orient="vertical")
+    scrollv.configure(command=table.yview)
+    table.configure(yscrollcommand=scrollv.set)
+    scrollv.pack(fill=Y, side=RIGHT)
 
-        table.pack(side=BOTTOM)
+    table.pack(side=BOTTOM)
 
-    if un_clicked:
+    def close():
+        rt_btn.config(state=NORMAL)
         table.destroy()
+        close_btn.destroy()
+
+    close_btn = Button(root, text="Close Register", command=close, width=14, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")
+    close_btn.place(x=498, y=370)
 
 
 rt_btn = Button(root, text="Registered Users", width=14, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33", command=table_reg)
@@ -127,8 +132,14 @@ def add():
             my_db.commit()
             add_frame.destroy()
 
-    reg_btn = Button(add_frame, text="Register", command=register, foreground="#89db33", bg="#0F0F0F", width=21)
+    reg_btn = Button(add_frame, text="Register", command=register, foreground="#89db33", bg="#0F0F0F", width=10)
     reg_btn.place(x=230, y=220)
+
+    def close():
+        add_frame.destroy()
+
+    close_btn = Button(add_frame, text="Quit", command=close, foreground="#89db33", bg="#0F0F0F", width=7)
+    close_btn.place(x=345, y=220)
 
 
 add_btn = Button(root, text="Add User", command=add, width=14, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")

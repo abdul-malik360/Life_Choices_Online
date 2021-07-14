@@ -167,8 +167,8 @@ def register():
     if id_ent.get() == "" or name_ent.get() == "" or surname_ent.get() == "" or username_ent.get() == "" or password_ent.get() == "" or cell_ent.get() == "" or next_kin_ent.get() == "" or kin_cell_ent.get() == "":
         messagebox.showerror("No Entries", "Please fill all fields")
     else:
-        messagebox.showinfo("Register", "You have been Registered")
-        my_db = mysql.connector.connect(user="abdul-malik", password="@8-2fermENt2020", host="127.0.0.1", database="LC_Online", auth_plugin="mysql_native_password")
+        messagebox.showinfo("Register", str(name_ent.get()) + ", You have been Registered")
+        my_db = mysql.connector.connect(user="abdul-malik", password="@8-2fermENt2020", host="127.0.0.1", database="LCA_Online", auth_plugin="mysql_native_password")
         my_cursor = my_db.cursor()
         insert = "INSERT INTO Register (ID, Name, Surname, UserName, Role, Password, Cell, Next_Of_Kin, NextOfKin_Cell) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
         entries = (id_ent.get(), name_ent.get(), surname_ent.get(), username_ent.get(), role_ent.get(), password_ent.get(), cell_ent.get(), next_kin_ent.get(), kin_cell_ent.get())
