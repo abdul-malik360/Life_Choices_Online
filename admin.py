@@ -25,10 +25,13 @@ my_cursor = my_db.cursor()
 
 
 def table_reg():
+    add_btn.config(state=DISABLED)
+    log_btn.config(state=DISABLED)
     rt_btn.config(state=DISABLED)
-    remove_btn.config(state=NORMAL)
+    admin_btn.config(state=DISABLED)
     my_cursor.execute("select * from Register")
 
+    table = ttk.Treeview(root)
     table["show"] = "headings"
 
     style = ttk.Style(root)
@@ -76,12 +79,36 @@ def table_reg():
     table.pack(side=BOTTOM)
 
     def close():
+        log_btn.config(state=NORMAL)
+        add_btn.config(state=NORMAL)
         rt_btn.config(state=NORMAL)
+        admin_btn.config(state=NORMAL)
+        remove_btn.config(state=DISABLED)
+        scrollv.destroy()
+        scrollh.destroy()
         table.destroy()
+        edit_btn.destroy()
+        remove_btn.destroy()
         close_btn.destroy()
 
-    close_btn = Button(root, text="Close Register", command=close, width=14, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")
-    close_btn.place(x=498, y=370)
+    def remove():
+
+        selected = table.selection()[0]
+        print(table.item(selected)['values'])
+        uid = table.item(selected)['values'][0]
+        del_query = 'DELETE FROM Register where ID=%s'
+        sel_data = (uid,)
+        my_cursor.execute(del_query, sel_data)
+        my_db.commit()
+        table.delete(selected)
+        messagebox.showinfo("User removed", "Successfully removed a User")
+
+    edit_btn = Button(root, text="Edit User", command=None, width=14, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")
+    edit_btn.place(x=305, y=370)
+    remove_btn = Button(root, text="Remove User", command=remove, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")
+    remove_btn.place(x=450, y=370)
+    close_btn = Button(root, text="Close", command=close, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")
+    close_btn.place(x=570, y=370)
 
 
 rt_btn = Button(root, text="Registered Users", width=14, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33", command=table_reg)
@@ -89,6 +116,10 @@ rt_btn.place(x=10, y=100)
 
 
 def add():
+    add_btn.config(state=DISABLED)
+    log_btn.config(state=DISABLED)
+    rt_btn.config(state=DISABLED)
+    admin_btn.config(state=DISABLED)
     add_frame = LabelFrame(root, width=450, height=280, bg="#89db33")
     add_frame.place(x=160, y=100)
     Label(add_frame, text="ID Number", bg="#89db33", foreground="#0F0F0F").place(x=10, y=10)
@@ -136,6 +167,10 @@ def add():
     reg_btn.place(x=230, y=220)
 
     def close():
+        log_btn.config(state=NORMAL)
+        add_btn.config(state=NORMAL)
+        rt_btn.config(state=NORMAL)
+        admin_btn.config(state=NORMAL)
         add_frame.destroy()
 
     close_btn = Button(add_frame, text="Quit", command=close, foreground="#89db33", bg="#0F0F0F", width=7)
@@ -146,20 +181,11 @@ add_btn = Button(root, text="Add User", command=add, width=14, foreground="#89db
 add_btn.place(x=10, y=150)
 
 
-def remove():
-    r = table.selection()[0]
-    table.delete(r)
-    messagebox.showinfo("User removed", "Successfully removed a User")
-
-
-remove_btn = Button(root, text="Remove User", command=remove, state=DISABLED, width=14, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")
-remove_btn.place(x=10, y=200)
-edit_btn = Button(root, text="Edit User", command=None, width=14, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")
-edit_btn.place(x=10, y=250)
-
-
 def table_log():
-
+    log_btn.config(state=DISABLED)
+    add_btn.config(state=DISABLED)
+    rt_btn.config(state=DISABLED)
+    admin_btn.config(state=DISABLED)
     my_cursor.execute("select * from Log")
 
     table2 = ttk.Treeview(root)
@@ -201,9 +227,69 @@ def table_log():
 
     table2.pack(side=BOTTOM)
 
+    def close():
+        log_btn.config(state=NORMAL)
+        add_btn.config(state=NORMAL)
+        rt_btn.config(state=NORMAL)
+        admin_btn.config(state=NORMAL)
+        scrollu.destroy()
+        scrolls.destroy()
+        table2.destroy()
+        close_btn.destroy()
+
+    close_btn = Button(root, text="Close", command=close, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")
+    close_btn.place(x=570, y=370)
+
 
 log_btn = Button(root, text="Logged Users", command=table_log, width=14, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")
-log_btn.place(x=10, y=300)
+log_btn.place(x=10, y=200)
+
+
+def new_admin():
+    log_btn.config(state=DISABLED)
+    add_btn.config(state=DISABLED)
+    rt_btn.config(state=DISABLED)
+    admin_btn.config(state=DISABLED)
+    admin_frame = LabelFrame(root, width=450, height=280, bg="#89db33")
+    admin_frame.place(x=160, y=100)
+
+    Label(admin_frame, text="Username", bg="#89db33", foreground="#0F0F0F").place(x=130, y=60)
+    Label(admin_frame, text="Password", bg="#89db33", foreground="#0F0F0F").place(x=130, y=110)
+
+    username_ent = Entry(admin_frame, width=24)
+    username_ent.place(x=130, y=80)
+    password_ent = Entry(admin_frame, width=24)
+    password_ent.place(x=130, y=130)
+
+    def reg_admin():
+        if username_ent.get() == "" or password_ent.get() == "":
+            messagebox.showerror("No Entries", "Please fill all fields")
+        else:
+            my_db = mysql.connector.connect(user="abdul-malik", password="@8-2fermENt2020", host="127.0.0.1", database="LCA_Online", auth_plugin="mysql_native_password")
+            my_cursor = my_db.cursor()
+            insert = "INSERT INTO Admin (Name, Password) VALUES (%s, %s)"
+            entries = (username_ent.get(), password_ent.get())
+            my_cursor.execute(insert, entries)
+            my_db.commit()
+            messagebox.showinfo("Register Successful", "You have registered a new Admin")
+            admin_frame.destroy()
+
+    reg_btn = Button(admin_frame, text="Register", command=reg_admin, foreground="#89db33", bg="#0F0F0F", width=10)
+    reg_btn.place(x=230, y=220)
+
+    def close():
+        log_btn.config(state=NORMAL)
+        add_btn.config(state=NORMAL)
+        rt_btn.config(state=NORMAL)
+        admin_btn.config(state=NORMAL)
+        admin_frame.destroy()
+
+    close_btn = Button(admin_frame, text="Quit", command=close, foreground="#89db33", bg="#0F0F0F", width=7)
+    close_btn.place(x=345, y=220)
+
+
+admin_btn = Button(root, text="New Admin", command=new_admin, width=14, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")
+admin_btn.place(x=10, y=250)
 
 
 def quite():
@@ -212,6 +298,6 @@ def quite():
 
 
 q_btn = Button(root, text="Quit", command=quite, width=14, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")
-q_btn.place(x=10, y=350)
+q_btn.place(x=10, y=300)
 
 root.mainloop()
