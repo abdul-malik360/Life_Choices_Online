@@ -275,7 +275,7 @@ def new_admin():
             admin_frame.destroy()
 
     reg_btn = Button(admin_frame, text="Register", command=reg_admin, foreground="#89db33", bg="#0F0F0F", width=10)
-    reg_btn.place(x=230, y=220)
+    reg_btn.place(x=220, y=170)
 
     def close():
         log_btn.config(state=NORMAL)
@@ -285,7 +285,7 @@ def new_admin():
         admin_frame.destroy()
 
     close_btn = Button(admin_frame, text="Quit", command=close, foreground="#89db33", bg="#0F0F0F", width=7)
-    close_btn.place(x=345, y=220)
+    close_btn.place(x=245, y=220)
 
 
 admin_btn = Button(root, text="New Admin", command=new_admin, width=14, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")
