@@ -92,16 +92,18 @@ def table_reg():
         close_btn.destroy()
 
     def remove():
-
-        selected = table.selection()[0]
-        print(table.item(selected)['values'])
-        uid = table.item(selected)['values'][0]
-        del_query = 'DELETE FROM Register where ID=%s'
-        sel_data = (uid,)
-        my_cursor.execute(del_query, sel_data)
-        my_db.commit()
-        table.delete(selected)
-        messagebox.showinfo("User removed", "Successfully removed a User")
+        try:
+            selected = table.selection()[0]
+            print(table.item(selected)['values'])
+            uid = table.item(selected)['values'][0]
+            del_query = 'DELETE FROM Register where ID=%s'
+            sel_data = (uid,)
+            my_cursor.execute(del_query, sel_data)
+            my_db.commit()
+            table.delete(selected)
+            messagebox.showinfo("User removed", "Successfully removed a User")
+        except IndexError:
+            messagebox.showerror("Nothing Selected", "Please Select a User")
 
     edit_btn = Button(root, text="Edit User", command=None, width=14, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")
     edit_btn.place(x=305, y=370)
@@ -196,14 +198,16 @@ def table_log():
 
     style2.configure(".", font=("sans serif", 11))
     style2.configure("Treeview.Heading", foreground="#89db33", bg="#0F0F0F", font=("sans serif", 11, "bold"))
-    table2["columns"] = ("UserName", "Password", "Date", "TimeIn", "TimeOut")
+    table2["columns"] = ("LogNumber", "UserName", "Password", "Date", "TimeIn", "TimeOut")
 
+    table2.column("LogNumber", width=150, minwidth=150, anchor=tkinter.CENTER)
     table2.column("UserName", width=150, minwidth=150, anchor=tkinter.CENTER)
     table2.column("Password", width=150, minwidth=150, anchor=tkinter.CENTER)
     table2.column("Date", width=130, minwidth=130, anchor=tkinter.CENTER)
     table2.column("TimeIn", width=100, minwidth=100, anchor=tkinter.CENTER)
     table2.column("TimeOut", width=100, minwidth=100, anchor=tkinter.CENTER)
 
+    table2.heading("LogNumber", text="Log Number", anchor=tkinter.CENTER)
     table2.heading("UserName", text="Username", anchor=tkinter.CENTER)
     table2.heading("Password", text="Password", anchor=tkinter.CENTER)
     table2.heading("Date", text="Date", anchor=tkinter.CENTER)
@@ -212,7 +216,7 @@ def table_log():
 
     z = 0
     for row2 in my_cursor:
-        table2.insert("", z, text="", values=(row2[0], row2[1], row2[2], row2[3], row2[4]))
+        table2.insert("", z, text="", values=(row2[0], row2[1], row2[2], row2[3], row2[4], row2[5]))
         z = z + 1
 
     scrolls = ttk.Scrollbar(root, orient="horizontal")
@@ -227,6 +231,33 @@ def table_log():
 
     table2.pack(side=BOTTOM)
 
+    # display signed in
+    log_frame = LabelFrame(root, width=400, height=230, bg="#89db33")
+    log_frame.place(x=160, y=100)
+
+    font = ("Sans Serif", 15, "bold")
+    Label(log_frame, text="User's Signed In:", bg="#FFFFFF", width=15, foreground="#0F0F0F", font=font).place(x=100, y=20)
+    Label(log_frame, text="User's Signed Out:", bg="#FFFFFF", width=15, foreground="#0F0F0F", font=font).place(x=100, y=140)
+
+    people_in = StringVar()
+    my_cursor.execute("select Count(TimeIn) from Log")
+
+    count_in = Label(log_frame, textvariable=people_in, bg="#89db33", foreground="#0F0F0F", font=font)
+    count_in.place(x=200, y=60)
+    for i in my_cursor:
+        people_in.set(i)
+
+    # sign out
+    people_out = StringVar()
+    my_cursor.execute("select Count(TimeOut) from Log")
+
+    count_out = Label(log_frame, textvariable=people_out, bg="#89db33", foreground="#0F0F0F", font=font)
+    count_out.place(x=200, y=180)
+    for o in my_cursor:
+        people_out.set(o)
+        if len(o) > 0:
+            print("there are still users inside")
+
     def close():
         log_btn.config(state=NORMAL)
         add_btn.config(state=NORMAL)
@@ -235,6 +266,7 @@ def table_log():
         scrollu.destroy()
         scrolls.destroy()
         table2.destroy()
+        log_frame.destroy()
         close_btn.destroy()
 
     close_btn = Button(root, text="Close", command=close, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")

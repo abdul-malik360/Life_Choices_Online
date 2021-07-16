@@ -84,8 +84,8 @@ def sign_in():
         if name_ent.get() == i[3] and password_ent.get() == i[5]:
             date = datetime.now().date().strftime("%Y-%m-%d")
             time = datetime.now().time().strftime("%H:%M:%S")
-            insert = "INSERT INTO Log (UserName, Password, Date, TimeIn, TimeOut) VALUES (%s, %s, %s, %s, %s)"
-            entries = (name_ent.get(), password_ent.get(), date, time, "")
+            insert = "INSERT INTO Log (UserName, Password, Date, TimeIn) VALUES (%s, %s, %s, %s)"
+            entries = (name_ent.get(), password_ent.get(), date, time,)
             my_cursor.execute(insert, entries)
             my_db.commit()
             messagebox.showinfo("Login Successful", "Enjoy your day")
@@ -109,7 +109,7 @@ def sign_out():
         messagebox.showerror("No Entries", "Please enter Username and Password")
     else:
         messagebox.showinfo("Logout", "You have signed out")
-        my_db = mysql.connector.connect(user="abdul-malik", password="@8-2fermENt2020", host="127.0.0.1", database="LC_Online", auth_plugin="mysql_native_password")
+        my_db = mysql.connector.connect(user="abdul-malik", password="@8-2fermENt2020", host="127.0.0.1", database="LCA_Online", auth_plugin="mysql_native_password")
         my_cursor = my_db.cursor()
         date = datetime.now().date().strftime("%Y-%m-%d")
         time = datetime.now().time().strftime("%H:%M:%S")
