@@ -130,25 +130,46 @@ def search():
 
     name_ent = Entry(search_frame, width=24)
     name_ent.place(x=10, y=10)
-    surname_ent = Entry(search_frame, width=24)
-    surname_ent.place(x=10, y=30)
-
-    Label(search_frame, text="ID Number", bg="#0F0F0F", foreground="#89db33").place(x=10, y=80)
-    Label(search_frame, text="Name", bg="#0F0F0F", foreground="#89db33").place(x=10, y=130)
-    Label(search_frame, text="Surname", bg="#0F0F0F", foreground="#89db33").place(x=10, y=180)
-    Label(search_frame, text="Username", bg="#0F0F0F", foreground="#89db33").place(x=10, y=250)
-    Label(search_frame, text="Role", bg="#0F0F0F", foreground="#89db33").place(x=100, y=80)
-    Label(search_frame, text="Password", bg="#0F0F0F", foreground="#89db33").place(x=10, y=130)
-    Label(search_frame, text="Cell Number", bg="#0F0F0F", foreground="#89db33").place(x=100, y=180)
-    Label(search_frame, text="Next of kin", bg="#0F0F0F", foreground="#89db33").place(x=100, y=280)
-    Label(search_frame, text="Next of Kin Cell Number", bg="#0F0F0F", foreground="#89db33").place(x=100, y=480)
+    # surname_ent = Entry(search_frame, width=24)
+    # surname_ent.place(x=10, y=30)
+    id_numb = StringVar()
+    name = StringVar()
+    surname = StringVar()
+    username = StringVar()
+    password = StringVar()
+    role = StringVar()
+    cell = StringVar()
+    kin = StringVar()
+    kincell = StringVar()
 
     def find():
-        my_cursor.execute("select * from Register where Name=%s, Surname=%s", name_ent.get(), surname_ent.get())
+        Label(search_frame, textvariable=id_numb, bg="#0F0F0F", foreground="#89db33").place(x=10, y=50)
+        Label(search_frame, textvariable=name, bg="#0F0F0F", foreground="#89db33").place(x=10, y=100)
+        Label(search_frame, textvariable=surname, bg="#0F0F0F", foreground="#89db33").place(x=10, y=150)
+        Label(search_frame, textvariable=username, bg="#0F0F0F", foreground="#89db33").place(x=10, y=200)
+        Label(search_frame, textvariable=password, bg="#0F0F0F", foreground="#89db33").place(x=200, y=50)
+        Label(search_frame, textvariable=role, bg="#0F0F0F", foreground="#89db33").place(x=10, y=250)
+        Label(search_frame, textvariable=cell, bg="#0F0F0F", foreground="#89db33").place(x=200, y=100)
+        Label(search_frame, textvariable=kin, bg="#0F0F0F", foreground="#89db33").place(x=200, y=150)
+        Label(search_frame, textvariable=kincell, bg="#0F0F0F", foreground="#89db33").place(x=200, y=200)
+
+        my_cursor.execute("select * from Register where Name=%s", name_ent.get())
 
         row = my_cursor.fetchall()
 
-        pass
+        id_numb.set(row[0])
+        name.set(row[1])
+        surname.set(row[2])
+        username.set(3)
+        role.set(row[4])
+        password.set(row[5])
+        cell.set(row[6])
+        kin.set(row[7])
+        kincell.set(row[8])
+
+        my_db.commit()
+    find_btn = Button(search_frame, text="Search", command=find, foreground="#89db33", bg="#0F0F0F", width=7)
+    find_btn.place(x=355, y=10)
 
     def close():
         log_btn.config(state=NORMAL)
@@ -158,9 +179,8 @@ def search():
         search_btn.config(state=NORMAL)
         search_frame.destroy()
 
-
     close_btn = Button(search_frame, text="Quit", command=close, foreground="#89db33", bg="#0F0F0F", width=7)
-    close_btn.place(x=345, y=220)
+    close_btn.place(x=355, y=240)
 
 
 search_btn = Button(root, text="Search User", command=search, width=14, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")
@@ -389,3 +409,14 @@ q_btn = Button(root, text="Quit", command=quite, width=14, foreground="#89db33",
 q_btn.place(x=10, y=350)
 
 root.mainloop()
+
+
+# Label(search_frame, text="ID Number", bg="#0F0F0F", foreground="#89db33").place(x=10, y=50)
+# Label(search_frame, text="Name", bg="#0F0F0F", foreground="#89db33").place(x=10, y=100)
+# Label(search_frame, text="Surname", bg="#0F0F0F", foreground="#89db33").place(x=10, y=150)
+# Label(search_frame, text="Username", bg="#0F0F0F", foreground="#89db33").place(x=10, y=200)
+# Label(search_frame, text="Role", bg="#0F0F0F", foreground="#89db33").place(x=200, y=50)
+# Label(search_frame, text="Password", bg="#0F0F0F", foreground="#89db33").place(x=10, y=250)
+# Label(search_frame, text="Cell Number", bg="#0F0F0F", foreground="#89db33").place(x=200, y=100)
+# Label(search_frame, text="Next of kin", bg="#0F0F0F", foreground="#89db33").place(x=200, y=150)
+# Label(search_frame, text="Next of Kin Cell Number", bg="#0F0F0F", foreground="#89db33").place(x=200, y=200)
