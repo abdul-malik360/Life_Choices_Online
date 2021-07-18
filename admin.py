@@ -29,6 +29,7 @@ def table_reg():
     log_btn.config(state=DISABLED)
     rt_btn.config(state=DISABLED)
     admin_btn.config(state=DISABLED)
+    search_btn.config(state=DISABLED)
     my_cursor.execute("select * from Register")
 
     table = ttk.Treeview(root)
@@ -83,6 +84,7 @@ def table_reg():
         add_btn.config(state=NORMAL)
         rt_btn.config(state=NORMAL)
         admin_btn.config(state=NORMAL)
+        search_btn.config(state=NORMAL)
         remove_btn.config(state=DISABLED)
         scrollv.destroy()
         scrollh.destroy()
@@ -96,9 +98,9 @@ def table_reg():
             selected = table.selection()[0]
             print(table.item(selected)['values'])
             uid = table.item(selected)['values'][0]
-            del_query = 'DELETE FROM Register where ID=%s'
+            delete = 'DELETE FROM Register where ID=%s'
             sel_data = (uid,)
-            my_cursor.execute(del_query, sel_data)
+            my_cursor.execute(delete, sel_data)
             my_db.commit()
             table.delete(selected)
             messagebox.showinfo("User removed", "Successfully removed a User")
@@ -117,11 +119,60 @@ rt_btn = Button(root, text="Registered Users", width=14, foreground="#89db33", b
 rt_btn.place(x=10, y=100)
 
 
+def search():
+    add_btn.config(state=DISABLED)
+    log_btn.config(state=DISABLED)
+    rt_btn.config(state=DISABLED)
+    admin_btn.config(state=DISABLED)
+    search_btn.config(state=DISABLED)
+    search_frame = LabelFrame(root, width=450, height=280, bg="#89db33")
+    search_frame.place(x=160, y=100)
+
+    name_ent = Entry(search_frame, width=24)
+    name_ent.place(x=10, y=10)
+    surname_ent = Entry(search_frame, width=24)
+    surname_ent.place(x=10, y=30)
+
+    Label(search_frame, text="ID Number", bg="#0F0F0F", foreground="#89db33").place(x=10, y=80)
+    Label(search_frame, text="Name", bg="#0F0F0F", foreground="#89db33").place(x=10, y=130)
+    Label(search_frame, text="Surname", bg="#0F0F0F", foreground="#89db33").place(x=10, y=180)
+    Label(search_frame, text="Username", bg="#0F0F0F", foreground="#89db33").place(x=10, y=250)
+    Label(search_frame, text="Role", bg="#0F0F0F", foreground="#89db33").place(x=100, y=80)
+    Label(search_frame, text="Password", bg="#0F0F0F", foreground="#89db33").place(x=10, y=130)
+    Label(search_frame, text="Cell Number", bg="#0F0F0F", foreground="#89db33").place(x=100, y=180)
+    Label(search_frame, text="Next of kin", bg="#0F0F0F", foreground="#89db33").place(x=100, y=280)
+    Label(search_frame, text="Next of Kin Cell Number", bg="#0F0F0F", foreground="#89db33").place(x=100, y=480)
+
+    def find():
+        my_cursor.execute("select * from Register where Name=%s, Surname=%s", name_ent.get(), surname_ent.get())
+
+        row = my_cursor.fetchall()
+
+        pass
+
+    def close():
+        log_btn.config(state=NORMAL)
+        add_btn.config(state=NORMAL)
+        rt_btn.config(state=NORMAL)
+        admin_btn.config(state=NORMAL)
+        search_btn.config(state=NORMAL)
+        search_frame.destroy()
+
+
+    close_btn = Button(search_frame, text="Quit", command=close, foreground="#89db33", bg="#0F0F0F", width=7)
+    close_btn.place(x=345, y=220)
+
+
+search_btn = Button(root, text="Search User", command=search, width=14, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")
+search_btn.place(x=10, y=200)
+
+
 def add():
     add_btn.config(state=DISABLED)
     log_btn.config(state=DISABLED)
     rt_btn.config(state=DISABLED)
     admin_btn.config(state=DISABLED)
+    search_btn.config(state=DISABLED)
     add_frame = LabelFrame(root, width=450, height=280, bg="#89db33")
     add_frame.place(x=160, y=100)
     Label(add_frame, text="ID Number", bg="#89db33", foreground="#0F0F0F").place(x=10, y=10)
@@ -173,6 +224,7 @@ def add():
         add_btn.config(state=NORMAL)
         rt_btn.config(state=NORMAL)
         admin_btn.config(state=NORMAL)
+        search_btn.config(state=NORMAL)
         add_frame.destroy()
 
     close_btn = Button(add_frame, text="Quit", command=close, foreground="#89db33", bg="#0F0F0F", width=7)
@@ -180,7 +232,7 @@ def add():
 
 
 add_btn = Button(root, text="Add User", command=add, width=14, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")
-add_btn.place(x=10, y=150)
+add_btn.place(x=10, y=250)
 
 
 def table_log():
@@ -188,6 +240,7 @@ def table_log():
     add_btn.config(state=DISABLED)
     rt_btn.config(state=DISABLED)
     admin_btn.config(state=DISABLED)
+    search_btn.config(state=DISABLED)
     my_cursor.execute("select * from Log")
 
     table2 = ttk.Treeview(root)
@@ -263,6 +316,7 @@ def table_log():
         add_btn.config(state=NORMAL)
         rt_btn.config(state=NORMAL)
         admin_btn.config(state=NORMAL)
+        search_btn.config(state=NORMAL)
         scrollu.destroy()
         scrolls.destroy()
         table2.destroy()
@@ -274,7 +328,7 @@ def table_log():
 
 
 log_btn = Button(root, text="Logged Users", command=table_log, width=14, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")
-log_btn.place(x=10, y=200)
+log_btn.place(x=10, y=150)
 
 
 def new_admin():
@@ -282,6 +336,7 @@ def new_admin():
     add_btn.config(state=DISABLED)
     rt_btn.config(state=DISABLED)
     admin_btn.config(state=DISABLED)
+    search_btn.config(state=DISABLED)
     admin_frame = LabelFrame(root, width=450, height=280, bg="#89db33")
     admin_frame.place(x=160, y=100)
 
@@ -314,6 +369,7 @@ def new_admin():
         add_btn.config(state=NORMAL)
         rt_btn.config(state=NORMAL)
         admin_btn.config(state=NORMAL)
+        search_btn.config(state=NORMAL)
         admin_frame.destroy()
 
     close_btn = Button(admin_frame, text="Quit", command=close, foreground="#89db33", bg="#0F0F0F", width=7)
@@ -321,7 +377,7 @@ def new_admin():
 
 
 admin_btn = Button(root, text="New Admin", command=new_admin, width=14, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")
-admin_btn.place(x=10, y=250)
+admin_btn.place(x=10, y=300)
 
 
 def quite():
@@ -330,6 +386,6 @@ def quite():
 
 
 q_btn = Button(root, text="Quit", command=quite, width=14, foreground="#89db33", bg="#0F0F0F", highlightbackground="#89db33")
-q_btn.place(x=10, y=300)
+q_btn.place(x=10, y=350)
 
 root.mainloop()
