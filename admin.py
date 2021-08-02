@@ -42,6 +42,17 @@ def table_reg():
     style.configure("Treeview.Heading", foreground="#89db33", bg="#0F0F0F", font=("sans serif", 11, "bold"))
     table["columns"] = ("ID", "Name", "Surname", "UserName", "Role", "Password", "Cell", "Next_Of_Kin", "NextOfKin_Cell")
 
+    table.tag_configure("odd", background="#89db33")
+    table.tag_configure("even", background="#0F0F0F", foreground="white")
+
+    count = 0
+    for i in my_cursor:
+        if count % 2 == 0:
+            table.insert("", 'end', iid= count, values = (i[0],i[1],i[2],i[3],i[4],i[5],i[6],i[7],i[8]), tags=("even",))
+        else:
+            table.insert("", 'end', iid= count, values = (i[0],i[1],i[2],i[3],i[4],i[5],i[6],i[7],i[8]), tags=("odd",))
+        count += 1
+
     table.column("ID", width=150, minwidth=150, anchor=tkinter.CENTER)
     table.column("Name", width=150, minwidth=150, anchor=tkinter.CENTER)
     table.column("Surname", width=150, minwidth=150, anchor=tkinter.CENTER)
@@ -272,6 +283,17 @@ def table_log():
     style2.configure(".", font=("sans serif", 11))
     style2.configure("Treeview.Heading", foreground="#89db33", bg="#0F0F0F", font=("sans serif", 11, "bold"))
     table2["columns"] = ("LogNumber", "UserName", "Password", "Date", "TimeIn", "TimeOut")
+
+    table2.tag_configure("odd", background="#89db33")
+    table2.tag_configure("even", background="#0F0F0F", foreground="white")
+
+    count = 0
+    for i in my_cursor:
+        if count % 2 == 0:
+            table2.insert("", 'end', iid= count, values=(i[0], i[1], i[2], i[3], i[4], i[5]), tags=("even",))
+        else:
+            table2.insert("", 'end', iid= count, values=(i[0], i[1], i[2], i[3], i[4], i[5]), tags=("odd",))
+        count += 1
 
     table2.column("LogNumber", width=150, minwidth=150, anchor=tkinter.CENTER)
     table2.column("UserName", width=150, minwidth=150, anchor=tkinter.CENTER)
